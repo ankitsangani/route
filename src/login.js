@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {UserOutlined, LockOutlined}  from "@ant-design/icons";
 import 'antd/dist/antd.css';
 import {Row,Col,Card, Form, Input, Button} from 'antd';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -23,17 +23,15 @@ const login = (props) => {
                            initialValues={{ remember: true }}
                        >
                            <Form.Item
-                               label="Username"
                                rules={[{ required: true, message: 'Please input your username!' }]}
                            >
-                               <Input />
+                               <Input placeholder="Username" addonBefore={<UserOutlined />} />
                            </Form.Item>
 
                            <Form.Item
-                               label="Password"
                                rules={[{ required: true, message: 'Please input your password!' }]}
                            >
-                               <Input.Password />
+                               <Input.Password placeholder="Password"  addonBefore={<LockOutlined />}/>
                            </Form.Item>
                            <Form.Item>
                                <Button className="btn-md" style={{backgroundColor:"#321fdb",color:"white"}} type="button" htmlType="submit">
