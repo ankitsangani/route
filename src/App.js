@@ -1,15 +1,17 @@
-import login from './login'
+import React  from "react";
 import {BrowserRouter,Route,Switch} from 'react-router-dom';
-import React,{useState}  from "react";
+import login from './login'
 import signUp from "./signUp";
-import users from './users';
+import Users from './users';
+
 function App() {
   return (
       <BrowserRouter>
           <Switch>
-              <Route exact path="/" component={login}></Route>
-              <Route path="/signUp" component={signUp}></Route>
-              <Route path="/users" component={users}></Route>
+              <Route exact path="/" component={login}/>
+              <Route path="/signUp" component={signUp}/>
+              <Route path="/users" component={Users}/>
+              <Route path="/editUserDetails/:id" component={signUp}/>
           </Switch>
       </BrowserRouter>
   );

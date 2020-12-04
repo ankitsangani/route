@@ -16,7 +16,7 @@ const login = (props) => {
                <Col span={8}></Col>
 
                <Col span={4}>
-                   <Card style={{borderColor:"#321fdb"}} bordered={true}>
+                   <Card className="mainCard-signUp"  bordered={true}>
                        <h2 style={{color:"#321fdb"}}>Log In</h2>
                        <Form
                            name="basic"
