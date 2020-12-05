@@ -147,6 +147,7 @@ const SignUp = (props) => {
             if (props.match.params.id !== undefined) {
                 let index = data.findIndex(item => item.id == props.match.params.id);
                 data[index] = userDetail
+
                 setData(data)
             } else {
                 userDetail.id = data.length + 1;
@@ -155,7 +156,12 @@ const SignUp = (props) => {
             }
             localStorage.setItem("data", JSON.stringify(data));
             setUserDetail({});
-            props.history.push("/users")
+            if(localStorage.getItem('token')){
+                props.history.push("/users");
+            }
+            else {
+                props.history.push("/");
+            }
         }
     }
     return (

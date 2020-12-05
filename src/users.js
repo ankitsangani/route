@@ -21,7 +21,11 @@ const Users = (props) => {
         props.history.push(`/editUserDetails/${record.id}`);
     }
     function LogOut() {
+        localStorage.setItem('token','');
         props.history.push("/");
+    }
+    const handleDashboard = () => {
+        props.history.push("/dashboard");
     }
     const columns = [
         {
@@ -83,6 +87,7 @@ const Users = (props) => {
 
     return(
         <>
+            <Button size={"large"} className="buttonlogout" onClick={handleDashboard}><b>Dashboard</b></Button>
             <Button size={"large"} className="buttonlogout" onClick={LogOut} ><b>Log-Out</b></Button>
             <h3>Users Details</h3>
             <Row>

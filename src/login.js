@@ -21,7 +21,8 @@ const Login = (props) => {
     }
     const LogIn =() => {
         if(data.findIndex(item => item.email === userDetail.email && item.password === userDetail.password) !== -1) {
-            props.history.push('/users');
+            props.history.push('/dashboard');
+            localStorage.setItem('token',userDetail.email);
         }
         else {
             setError("Email And Password Not matched");
