@@ -2,7 +2,7 @@ import React,{useEffect,useState} from 'react';
 import {UserOutlined, LockOutlined}  from "@ant-design/icons";
 import 'antd/dist/antd.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import {Row,Col,Card, Form, Input, Button} from 'antd';
+import {Row,Col,Card,message, Form, Input, Button} from 'antd';
 const Login = (props) => {
     const [data, setData] = useState([]);
     const [userDetail, setUserDetail] = useState({});
@@ -22,6 +22,7 @@ const Login = (props) => {
     const LogIn =() => {
         if(data.findIndex(item => item.email === userDetail.email && item.password === userDetail.password) !== -1) {
             props.history.push('/dashboard');
+            message.success("Login SuccessFully...")
             localStorage.setItem('token',userDetail.email);
         }
         else {

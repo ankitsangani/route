@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {Row, Col, Card, Form, Input, Radio, InputNumber, Select, Checkbox, Button} from 'antd';
+import {Row, Col, Card, Form, Input, Radio, InputNumber, Select,message, Button} from 'antd';
 import {UserOutlined, MailOutlined, ContactsOutlined, HomeOutlined, LockOutlined} from '@ant-design/icons';
 
 const SignUp = (props) => {
@@ -147,12 +147,12 @@ const SignUp = (props) => {
             if (props.match.params.id !== undefined) {
                 let index = data.findIndex(item => item.id == props.match.params.id);
                 data[index] = userDetail
-
                 setData(data)
             } else {
                 userDetail.id = data.length + 1;
                 data.push(userDetail)
                 setData(data)
+                message.success("Registered Successfully ...");
             }
             localStorage.setItem("data", JSON.stringify(data));
             setUserDetail({});
