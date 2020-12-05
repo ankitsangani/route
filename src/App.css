@@ -2,5 +2,22 @@
 
 .mainCard-signUp {
   border: 1px solid #321fdb;
-  color: red;
+}
+.row-class {
+  margin-top: 200px;
+}
+.h2login {
+  color:#321fdb;
+
+}
+.buttonsubmitlogin {
+  background-color: #321fdb!important;
+  color: white!important;
+}
+span.validation {
+  color: red!important;
+}
+.buttonlogout {
+  color: white!important;
+  background-color: #321fdb!important;
 }
