@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { Table,Popconfirm,Button, Tag, Space ,Row,Col} from 'antd';
-import { QuestionCircleOutlined } from '@ant-design/icons';
+
 
 const Users = (props) => {
     const [data, setData] = useState([]);
@@ -10,24 +10,20 @@ const Users = (props) => {
         if (JSON.parse(localStorage.getItem("data")) !== null) {
             list = JSON.parse(localStorage.getItem("data"));
         }
-
         setData(list);
     }, [])
     const handleDelete = (record) => {
-
            const filterData = data.filter(index => index !== record);
            localStorage.setItem('data', JSON.stringify(filterData));
            setData(filterData);
     }
     const handleUpdate = (record) => {
-
         props.history.push(`/editUserDetails/${record.id}`);
     }
     function LogOut() {
         props.history.push("/");
     }
     const columns = [
-
         {
             title: 'First Name',
             key: 'firstName',
@@ -74,11 +70,11 @@ const Users = (props) => {
             render: (text, record) => (
                 <div>
                     <Popconfirm title="Are you sure to Update？"  style={{ color: 'red' }} onConfirm={()=> {handleUpdate(record)}} >
-                    <button className="btn btn-outline-primary btn-mini"  >Edit</button>
+                    <Button className="btn btn-outline-primary btn-mini"  >Edit</Button>
                     </Popconfirm>
                     &nbsp;&nbsp;
                     <Popconfirm title="Are you sure to Delete？"  style={{ color: 'red' }} onConfirm={()=> {handleDelete(record)}} >
-                    <button className="btn btn-outline-danger btn-mini"  >Delete</button>
+                    <Button className="btn btn-outline-danger btn-mini"  >Delete</Button>
                     </Popconfirm>
                 </div>
             )
@@ -87,7 +83,7 @@ const Users = (props) => {
 
     return(
         <>
-            <Button className="buttonlogout" onClick={LogOut} >Log-Out</Button>
+            <Button size={"large"} className="buttonlogout" onClick={LogOut} ><b>Log-Out</b></Button>
             <h3>Users Details</h3>
             <Row>
                 <Col span={4}> </Col>

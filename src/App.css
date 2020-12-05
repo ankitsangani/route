@@ -7,7 +7,7 @@
   margin-top: 200px;
 }
 .h2login {
-  color:#321fdb;
+  color:#321fdb!important;
 
 }
 .buttonsubmitlogin {
@@ -20,4 +20,23 @@ span.validation {
 .buttonlogout {
   color: white!important;
   background-color: #321fdb!important;
+}
+.card-demo{
+  background-color:#321fdb!important;
+  height:100%;
+  width:100%;
+  color:white;
+}
+.demo{
+  color: white;
+}
+.red {
+  color: red;
+}
+.cardtop {
+  border-color: #321fdb!important;
+  margin-top: 25px!important;
+}
+.none {
+  resize: none;
 }

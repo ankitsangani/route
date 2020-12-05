@@ -1,6 +1,7 @@
 import React,{useEffect,useState} from 'react';
 import {UserOutlined, LockOutlined}  from "@ant-design/icons";
 import 'antd/dist/antd.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import {Row,Col,Card, Form, Input, Button} from 'antd';
 const Login = (props) => {
     const [data, setData] = useState([]);
@@ -49,7 +50,7 @@ const Login = (props) => {
 
                            <Form.Item>
                                <Input.Password placeholder="Password" name="password" value={userDetail.password} onChange={handleChange}  addonBefore={<LockOutlined />}/>
-                               <span style={{color:"red"}}> {error}</span>
+                               <span className="red" > {error}</span>
                            </Form.Item>
                            <Form.Item>
                                <Button className="btn-md buttonsubmitlogin"  type="button" htmlType="submit" onClick={LogIn}>
@@ -60,10 +61,10 @@ const Login = (props) => {
                    </Card>
                </Col>
                <Col  span={4}>
-                   <Card style={{backgroundColor:"#321fdb",height:"100%",width:"100%",color:"white"}}   bordered={false}>
-                        <h2 style={{color:"white"}}>Sign up</h2>
-                       <p style={{color:"white"}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                       <a > <button onClick={signUp} className="btn" style={{backgroundColor:"#321fdb",color:"white"}} type="button">Register Now</button></a>
+                   <Card className="card-demo"    bordered={false}>
+                        <h2 className="demo" >Sign up</h2>
+                       <p className="demo">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                       <a> <button className="buttonsubmitlogin btn" onClick={signUp}   type="button">Register Now</button></a>
                    </Card>
                </Col>
                <Col span={8}></Col>

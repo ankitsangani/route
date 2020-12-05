@@ -163,8 +163,8 @@ const SignUp = (props) => {
             <Row>
                 <Col span={8}/>
                 <Col span={8}>
-                    <Card style={{borderColor: "#321fdb", marginTop: "25px"}}>
-                        <h1 style={{color: "#321fdb"}}>Register</h1>
+                    <Card className="cardtop">
+                        <h1 className="h2login">Register</h1>
                         <p><b>Create your account</b></p>
                         <Form>
                             <Form.Item>
@@ -198,7 +198,7 @@ const SignUp = (props) => {
                             <Form.Item
                                 label={(<HomeOutlined/>)}>
                                 <Input.TextArea name="address" onChange={handleChange} value={userDetail.address}
-                                                placeholder="Enter Your Address" style={{resize: "none"}}
+                                                placeholder="Enter Your Address" className="none"
                                                 addonBefore={<HomeOutlined/>}/>
                                 <span className="validation">{errors.address}</span>
                             </Form.Item>
@@ -239,8 +239,8 @@ const SignUp = (props) => {
                                 <span className="validation">{errors.password}</span>
                             </Form.Item>
                             <Form.Item>
-                                <Button className="btn-md" htmlType="submit" onClick={submitValue}
-                                        style={{backgroundColor: "#321fdb", color: "white"}} type="primary"
+                                <Button className="btn-md buttonsubmitlogin" htmlType="submit" onClick={submitValue}
+                                       type="primary"
                                         size={"large"}>
                                     Create Account
                                 </Button>
