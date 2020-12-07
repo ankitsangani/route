@@ -1,17 +1,32 @@
 import React, {useEffect, useState} from 'react';
-import { Table,Popconfirm,Button, Tag, Space ,Row,Col} from 'antd';
+import {Input, Table,Popconfirm,Button, Tag, Space ,Row,Col} from 'antd';
 
 
 const Users = (props) => {
+    const [userDetail, setUserDetail] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNo: "",
+        age: "",
+        gender: "",
+    });
     const [data, setData] = useState([]);
-
+    const [dublicateList,setdublicateList] = useState([]);
+    const {Search} = Input;
     useEffect(() => {
+
         let list = [];
         if (JSON.parse(localStorage.getItem("data")) !== null) {
             list = JSON.parse(localStorage.getItem("data"));
         }
         setData(list);
+        setdublicateList(list);
     }, [])
+    const handleChange = e => {
+        let {name, value} = e.target;
+        setUserDetail({...userDetail, [name]: value});
+    }
     const handleDelete = (record) => {
            const filterData = data.filter(index => index !== record);
            localStorage.setItem('data', JSON.stringify(filterData));
@@ -26,6 +41,54 @@ const Users = (props) => {
     }
     const handleDashboard = () => {
         props.history.push("/dashboard");
+    }
+    const handleSearch = e => {
+        let userValues = userDetail;
+        let row = dublicateList || [];
+        if(userValues.firstName){
+            row = row.filter(value => value.firstName.toLowerCase().includes(userValues.firstName.toLowerCase()))
+        }
+        if(userValues.lastName){
+            row = row.filter(value => value.lastName.toLowerCase().includes(userValues.lastName.toLowerCase()))
+        }
+        if(userValues.email){
+            row = row.filter(value => value.email.toLowerCase().includes(userValues.email.toLowerCase()))
+        }
+        if(userValues.phoneNo){
+            row = row.filter(value => value.phoneNo.toLowerCase().includes(userValues.phoneNo.toLowerCase()))
+        }
+        if(userValues.age){
+            row = row.filter(value => value.age.toLowerCase().includes(userValues.age.toLowerCase()))
+        }
+        if(userValues.gender){
+            row = row.filter(value => value.gender.toLowerCase().includes(userValues.gender.toLowerCase()))
+        }
+
+    //     let filterArray = [] ;
+    //     let userValues = userDetail;
+    //     const d = dublicateList.filter(record => {
+    //         if(userValues.firstName){
+    //             filterArray = record.firstName.toLowerCase().includes(userValues.firstName.toLowerCase());
+    //         }
+    //         if(userValues.lastName){
+    //             filterArray = record.lastName.toLowerCase().includes(userValues.lastName.toLowerCase());
+    //         }
+    //         if(userValues.email){
+    //             filterArray = record.email.toLowerCase().includes(userValues.email.toLowerCase());
+    //         }
+    //         if(userValues.phoneNo){
+    //             filterArray = record.phoneNo.toLowerCase().includes(userValues.phoneNo.toLowerCase());
+    //         }
+    //         if(userValues.age){
+    //             filterArray = record.age.toString().toLowerCase().includes(userValues.age.toLowerCase());
+    //         }
+    //         if(userValues.gender){
+    //             filterArray = record.gender.toLowerCase() === userValues.gender.toLowerCase()
+    //         }
+    //         return filterArray;
+    //     })
+    // setData(d)
+        setData(row);
     }
     const columns = [
         {
@@ -89,6 +152,13 @@ const Users = (props) => {
         <>
             <Button size={"large"} className="buttonlogout" onClick={handleDashboard}><b>Dashboard</b></Button>
             <Button size={"large"} className="buttonlogout" onClick={LogOut} ><b>Log-Out</b></Button>
+            <Button size={"large"} className="buttonlogout" onClick={handleSearch} ><b>Search</b></Button>
+            <Search className="search" value={userDetail.firstName} name="firstName"  onSearch={handleSearch} onChange={handleChange}  placeholder="input Firstname "  />
+            <Search className="search" value={userDetail.lastName} name="lastName" onSearch={handleSearch} onChange={handleChange}  placeholder="input Lastname " />
+            <Search className="search" value={userDetail.email} name="email" onSearch={handleSearch} onChange={handleChange} placeholder="input Email "  />
+            <Search className="search" value={userDetail.phoneNo} name="phoneNo" onSearch={handleSearch} onChange={handleChange} placeholder="input PhoneNo "  />
+            <Search className="search" value={userDetail.age} name="age" onSearch={handleSearch} onChange={handleChange} placeholder="input age "/>
+            <Search className="search" value={userDetail.gender} name="gender" onSearch={handleSearch} onChange={handleChange} placeholder="input gender "/>
             <h3>Users Details</h3>
             <Row>
                 <Col span={4}> </Col>

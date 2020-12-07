@@ -40,3 +40,7 @@ span.validation {
 .none {
   resize: none;
 }
+.search {
+  margin: 25px;
+  width: 200px!important;
+}
