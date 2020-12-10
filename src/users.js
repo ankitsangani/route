@@ -15,7 +15,6 @@ const Users = (props) => {
     const [dublicateList,setdublicateList] = useState([]);
     const {Search} = Input;
     useEffect(() => {
-
         let list = [];
         if (JSON.parse(localStorage.getItem("data")) !== null) {
             list = JSON.parse(localStorage.getItem("data"));
@@ -42,7 +41,7 @@ const Users = (props) => {
     const handleDashboard = () => {
         props.history.push("/dashboard");
     }
-    const handleSearch = e => {
+    const handleSearch = () => {
         let userValues = userDetail;
         let row = dublicateList || [];
         if(userValues.firstName){
@@ -58,7 +57,7 @@ const Users = (props) => {
             row = row.filter(value => value.phoneNo.toLowerCase().includes(userValues.phoneNo.toLowerCase()))
         }
         if(userValues.age){
-            row = row.filter(value => value.age.toLowerCase().includes(userValues.age.toLowerCase()))
+            row = row.filter(value => value.age.toString().toLowerCase().includes(userValues.age.toLowerCase()))
         }
         if(userValues.gender){
             row = row.filter(value => value.gender.toLowerCase().includes(userValues.gender.toLowerCase()))

@@ -14,7 +14,6 @@ const SignUp = (props) => {
         password: ""
     });
     const [data, setData] = useState([]);
-    const [editableIndex, setEditableIndex] = useState(null);
     const [errors,setError] = useState({});
     const [items] = useState([
         {
