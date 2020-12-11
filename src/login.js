@@ -3,31 +3,30 @@ import {UserOutlined, LockOutlined}  from "@ant-design/icons";
 import 'antd/dist/antd.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import {Row,Col,Card,message, Form, Input, Button} from 'antd';
+import axios from "axios";
 const Login = (props) => {
-    const [data, setData] = useState([]);
+
     const [userDetail, setUserDetail] = useState({});
-    const [error,setError] = useState("");
-    useEffect(()=> {
-        let list = [];
-        if(JSON.parse(localStorage.getItem('data',))!==null){
-            list=JSON.parse(localStorage.getItem('data'));
-        }
-        setData(list);
-    },[])
+
 
     const handleChange = e => {
         const {name, value} = e.target;
         setUserDetail({...userDetail, [name]: value})
     }
-    const LogIn =() => {
-        if(data.findIndex(item => item.email === userDetail.email && item.password === userDetail.password) !== -1) {
-            props.history.push('/dashboard');
-            message.success("Login SuccessFully...")
-            localStorage.setItem('token',userDetail.email);
-        }
-        else {
-            setError("Email And Password Not matched");
-        }
+    const LogIn = () => {
+        axios.post('http://localhost:8080/users/login',userDetail)
+            .then(res => {
+                if (res && res.data && res.data._id) {
+                    message.success("Successfully login")
+                    localStorage.setItem("token",res.data.email)
+                    props.history.push("/users");
+                }else {
+                    message.error("User not Found")
+                }
+            })
+            .catch(error => {
+                message.error("Please enter valid data..")
+            })
     }
     function signUp() {
         props.history.push("/signUp");
@@ -52,7 +51,7 @@ const Login = (props) => {
 
                            <Form.Item>
                                <Input.Password placeholder="Password" name="password" value={userDetail.password} onChange={handleChange}  addonBefore={<LockOutlined />}/>
-                               <span className="red" > {error}</span>
+                               <span className="red" > </span>
                            </Form.Item>
                            <Form.Item>
                                <Button className="btn-md buttonsubmitlogin"  type="button" htmlType="submit" onClick={LogIn}>
@@ -63,7 +62,7 @@ const Login = (props) => {
                    </Card>
                </Col>
                <Col  span={4}>
-                   <Card className="card-demo"    bordered={false}>
+                   <Card className="card-demo" bordered={false}>
                         <h2 className="demo" >Sign up</h2>
                        <p className="demo">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                        <a> <button className="buttonsubmitlogin btn" onClick={signUp}   type="button">Register Now</button></a>

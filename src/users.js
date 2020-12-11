@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {Input, Table,Popconfirm,Button, Tag, Space ,Row,Col} from 'antd';
+import {Input, Table, Popconfirm, Button, Tag, Space, Row, Col, message} from 'antd';
+import axios from "axios";
 
 
 const Users = (props) => {
@@ -10,29 +11,40 @@ const Users = (props) => {
         phoneNo: "",
         age: "",
         gender: "",
+        country:""
     });
     const [data, setData] = useState([]);
     const [dublicateList,setdublicateList] = useState([]);
     const {Search} = Input;
     useEffect(() => {
-        let list = [];
-        if (JSON.parse(localStorage.getItem("data")) !== null) {
-            list = JSON.parse(localStorage.getItem("data"));
-        }
-        setData(list);
-        setdublicateList(list);
+        listData()
     }, [])
+
+    const listData = () => {
+        axios.get(`http://localhost:8080/users`).then(response => setData(response.data || [])).catch(error => console.log(error));
+    }
+    // useEffect(() => {
+    //     let list = [];
+    //     if (axios.get('http://localhost:8080/users').then(response => response.data) !== null) {
+    //         list = axios.get('http://localhost:8080/').then(response => response.data).catch( error => error )
+    //     }
+    //     setData(list);
+    //     setdublicateList(list);
+    // }, [])
     const handleChange = e => {
         let {name, value} = e.target;
         setUserDetail({...userDetail, [name]: value});
     }
-    const handleDelete = (record) => {
-           const filterData = data.filter(index => index !== record);
-           localStorage.setItem('data', JSON.stringify(filterData));
-           setData(filterData);
+    const handleDelete = (id) => {
+           const filterData = data.filter(index => index !== id);
+            axios.delete(`http://localhost:8080/users/${id}`).then(response => {
+            message.success(response.data.message)
+            setData(filterData);
+        });
     }
-    const handleUpdate = (record) => {
-        props.history.push(`/editUserDetails/${record.id}`);
+    const handleUpdate = (id) => {
+        listData();
+        props.history.push(`/editUserDetails/${id}`);
     }
     function LogOut() {
         localStorage.setItem('token','');
@@ -135,11 +147,11 @@ const Users = (props) => {
             dataIndex: 'id',
             render: (text, record) => (
                 <div>
-                    <Popconfirm title="Are you sure to Update？"  style={{ color: 'red' }} onConfirm={()=> {handleUpdate(record)}} >
+                    <Popconfirm title="Are you sure to Update？"  style={{ color: 'red' }} onConfirm={()=> {handleUpdate(record._id)}} >
                     <Button className="btn btn-outline-primary btn-mini"  >Edit</Button>
                     </Popconfirm>
                     &nbsp;&nbsp;
-                    <Popconfirm title="Are you sure to Delete？"  style={{ color: 'red' }} onConfirm={()=> {handleDelete(record)}} >
+                    <Popconfirm title="Are you sure to Delete？"  style={{ color: 'red' }} onConfirm={()=> {handleDelete(record._id)}} >
                     <Button className="btn btn-outline-danger btn-mini"  >Delete</Button>
                     </Popconfirm>
                 </div>

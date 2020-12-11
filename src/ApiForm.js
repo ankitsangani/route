@@ -15,12 +15,12 @@ const ApiForm = () => {
         getinitdata();
     }, [])
      const getinitdata = () => {
-         axios.get('http://localhost:8080/notes').then(response => setData(response.data)).catch( error => error )
+         axios.get('http://localhost:8080/users').then(response => setData(response.data)).catch( error => error )
      }
     const handleDelete = (id) => {
-        axios.delete(`http://localhost:8080/notes/${id}`).then(response => {
+        axios.delete(`http://localhost:8080/users/${id}`).then(response => {
             getinitdata()
-            message.success(response.data.message)
+            message.success(response.data.message);
         });
         getinitdata();
     }

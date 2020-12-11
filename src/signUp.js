@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from "react";
 import {Row, Col, Card, Form, Input, Radio, InputNumber, Select,message, Button} from 'antd';
 import {UserOutlined, MailOutlined, ContactsOutlined, HomeOutlined, LockOutlined} from '@ant-design/icons';
+import axios from "axios";
+import {useHistory} from "react-router";
 
 const SignUp = (props) => {
     const [userDetail, setUserDetail] = useState({
@@ -11,8 +13,10 @@ const SignUp = (props) => {
         age: "",
         address: "",
         gender: "",
+        country:"",
         password: ""
     });
+    const history = useHistory()
     const [data, setData] = useState([]);
     const [errors,setError] = useState({});
     const [items] = useState([
@@ -39,18 +43,13 @@ const SignUp = (props) => {
     ]);
 
     useEffect(() => {
-        let list = [];
-        if (JSON.parse(localStorage.getItem("data")) !== null) {
-            list = JSON.parse(localStorage.getItem("data"));
-            if (props.match.params.id) {
-                const findUserDetail = list.find(user => user.id === parseInt(props.match.params.id))
-                if (findUserDetail) {
-                    setUserDetail(findUserDetail)
-                }
-            }
-        }
-        setData(list);
+        listData()
+
     }, [])
+
+    const listData = () => {
+            axios.get(`http://localhost:8080/users/${props.match.params.id}`).then(response => setUserDetail(response.data || [])).catch(error => console.log(error));
+    }
 
     const handleChange = e => {
         const {name, value} = e.target;
@@ -77,7 +76,7 @@ const SignUp = (props) => {
                     return "";
                 }
             case 'phoneNo':
-                if (!value.match(/^[0]?[789]\d{9}$/)) {
+                if (!value) {
                     return "please Enter Valid PhoneNo";
                 }
                 else {
@@ -143,23 +142,28 @@ const SignUp = (props) => {
             return setError(allErrors)
 
         } else {
-            if (props.match.params.id !== undefined) {
-                let index = data.findIndex(item => item.id == props.match.params.id);
-                data[index] = userDetail
-                setData(data)
+            // if (props.match.params.id !== undefined) {
+            //     let index = data.findIndex(item => item.id == props.match.params.id);
+            //     data[index] = userDetail
+            //     setData(data)
+            // } else {
+            //     data.push(userDetail)
+            //     setData(data)
+            //     message.success("Registered Successfully ...");
+            // }
+            if (localStorage.getItem('token') !== null) {
+                axios.put(`http://localhost:8080/users/${userDetail._id}`,userDetail)
+                    .then((response) => {
+                        console.log(response.data)
+                            setUserDetail(response.data)
+                            props.history.push("/users");
+                        }
+                    );
             } else {
-                userDetail.id = data.length + 1;
-                data.push(userDetail)
-                setData(data)
-                message.success("Registered Successfully ...");
-            }
-            localStorage.setItem("data", JSON.stringify(data));
-            setUserDetail({});
-            if(localStorage.getItem('token')){
-                props.history.push("/users");
-            }
-            else {
-                props.history.push("/");
+                axios.post('http://localhost:8080/users', userDetail)
+                    .then(() => {
+                        history.push("/")
+                    })
             }
         }
     }
